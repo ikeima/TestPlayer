@@ -12,7 +12,7 @@ namespace Player
         private const int MAX = 5; //максимальная длина массива
 
         public static string[] library = new string[MAX]; //массив с именами аудиозаписей
-        public static string filename = null; //переменная для записи имени одного аудио-файла
+        public static string filename = null; //переменная для записи пути одного аудио-файла
 
         public static void AudioLoad()
         {
@@ -26,9 +26,9 @@ namespace Player
         public static string NextSong() //метод переключения песни на следующую
         {
             Random rand = new Random();
-            string audio = library[rand.Next(0, library.Length)]; //вытягивает случайную песню из массива
+            filename = library[rand.Next(0, library.Length)]; //вытягивает случайную песню из массива
 
-            return audio; //возвращает ее имя для плеера
+            return filename; //возвращает ее имя для плеера
         }
 
         public static string Add_To_Arr(string filename) //метод для выбора аудио-файла

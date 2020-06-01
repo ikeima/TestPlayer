@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -27,6 +28,8 @@ namespace Player
         {
             timeMaxBlock.Text = player.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
             slider.Maximum = player.NaturalDuration.TimeSpan.TotalSeconds;
+            FileInfo f = new FileInfo(AudioPlayer.filename);
+            titleBlock.Text = f.Name;
         }
 
         private void timer_tick(object sender, EventArgs e)
