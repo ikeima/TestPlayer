@@ -19,14 +19,11 @@
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                     Height="20" Grid.Column="1">
-            <Button Width="70" Height="20" 
-                    Click="Pause_btn">
-                Pause
-            </Button>
 
             <Button Width="70" Height="20" Margin="10,0,0,0" 
-                    Click="Resume_btn">
-                Resume
+                    Click="Pause_resume_btn"
+                    x:Name="pauseResumeBtn">
+                Pause
             </Button>
 
             <Button Width="70" Height="20" Margin="10,0,0,0" 

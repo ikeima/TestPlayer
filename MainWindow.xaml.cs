@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -15,19 +12,31 @@ namespace Player
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
         MediaPlayer player = new MediaPlayer();
         DispatcherTimer timer = new DispatcherTimer();
+        bool isResume = false;
+        string filename = null;
         public MainWindow()
         {
             InitializeComponent();
-
-            //AudioPlayer.AudioLoad();
 
             timer.Interval = TimeSpan.FromSeconds(0.1); //установка интервала тикания таймера в 1 секунду
             timer.Tick += timer_tick;
             player.MediaOpened += player_MediaOpened;
             playlist.SelectionChanged += playlist_Selected;
+        }
+
+        public void TitleChange()
+        {
+            foreach (var name in AudioPlayer.myList)
+            {
+                if (name == playlist.SelectedValue.ToString())
+                {
+                    titleBlock.Text = name;
+                    break;
+                }
+            }
         }
 
         private void player_MediaOpened(object sender, EventArgs e) //событие при загрузке песни
@@ -36,8 +45,8 @@ namespace Player
             {
                 timeMaxBlock.Text = player.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
                 slider.Maximum = player.NaturalDuration.TimeSpan.TotalSeconds;
+                TitleChange();
             }
-            
         }
 
         private void timer_tick(object sender, EventArgs e)
@@ -46,21 +55,49 @@ namespace Player
             slider.Value = player.Position.TotalSeconds;
         }
 
-        private void Pause_btn(object sender, RoutedEventArgs e)
+        public void Resume_player()
         {
-            player.Pause();
-            timer.Stop();
+            if (!isResume)
+            {
+                pauseResumeBtn.Content = "Pause";
+                player.Play();
+                timer.Start();
+                isResume = true;
+            }
         }
 
-        private void Resume_btn(object sender, RoutedEventArgs e)
+        public void Pause_player()
         {
-            player.Play();
-            timer.Start();
+            if (isResume)
+            {
+                pauseResumeBtn.Content = "Resume";
+                player.Pause();
+                timer.Stop();
+                isResume = false;
+            }
+        }
+
+        private void Pause_resume_btn(object sender, RoutedEventArgs e)
+        {
+            if (isResume) Pause_player();
+            else Resume_player();
         }
 
         private void Next_btn(object sender, RoutedEventArgs e)
         {
-            //player.Open(new Uri(AudioPlayer.NextSong(), UriKind.RelativeOrAbsolute));
+            filename = AudioPlayer.NextSong();
+            player.Open(new Uri(filename, UriKind.RelativeOrAbsolute));
+
+            foreach (var name in AudioPlayer.myList)
+            {
+                if (filename.Contains(name))
+                {
+                    titleBlock.Text = name;
+                    playlist.SelectedItem = name;
+                    break;
+                }
+            }
+
             player.Play();
         }
 
@@ -89,7 +126,7 @@ namespace Player
                 {
                     if (Path.GetExtension(file.FullName) == ".mp3")
                     {
-                        AudioPlayer.AudioLoad(file.FullName);                        
+                        AudioPlayer.AudioLoad(file.FullName);
                         AudioPlayer.myList.Add(file.Name);
                     }
                 }
@@ -109,10 +146,10 @@ namespace Player
                     break;
                 }
             }
-            
-            
+
+
         }
 
-        
+
     }
 }
