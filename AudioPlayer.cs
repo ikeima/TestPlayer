@@ -1,5 +1,7 @@
-﻿using Microsoft.Win32;
+﻿        using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Media;
 
 namespace Player
@@ -7,38 +9,38 @@ namespace Player
 
     public class AudioPlayer
     {
+        public static List<string> myList = new List<string>();
+
         public static MediaPlayer player = new MediaPlayer();
 
-        private const int MAX = 5; //максимальная длина массива
+        private const int MAX = 500; //максимальная длина массива
 
         public static string[] library = new string[MAX]; //массив с именами аудиозаписей
-        public static string filename = null; //переменная для записи пути одного аудио-файла
 
-        public static void AudioLoad()
+        public static void AudioLoad(string path)
         {
             for (int i = 0; i < library.Length; i++) //поочередное заполнение массива
             {
-                filename = Add_To_Arr(filename);
-                library[i] = filename;
+                library[i] = library[i] ?? path;
             }
         }
 
-        public static string NextSong() //метод переключения песни на следующую
+        public static void NextSong() //метод переключения песни на следующую
         {
-            Random rand = new Random();
-            filename = library[rand.Next(0, library.Length)]; //вытягивает случайную песню из массива
+            //Random rand = new Random();
+            //fullname = library[rand.Next(0, library.Length)]; //вытягивает случайную песню из массива
 
-            return filename; //возвращает ее имя для плеера
+            //return fullname; //возвращает ее имя для плеера
         }
 
-        public static string Add_To_Arr(string filename) //метод для выбора аудио-файла
-        {
-            OpenFileDialog file = new OpenFileDialog();
-            file.Filter = "Audio(MP3)|*.MP3;|All files (ALL)|*.*";
-            file.ShowDialog();
-            filename = file.FileName;
+        //public static string Add_To_Arr(string filename) //метод для выбора аудио-файла
+        //{
+        //    OpenFileDialog file = new OpenFileDialog();
+        //    file.Filter = "Audio(MP3)|*.MP3;|All files (ALL)|*.*";
+        //    file.ShowDialog();
+        //    filename = file.FileName;
 
-            return filename;
-        }
+        //    return filename;
+        //}
     }
 }

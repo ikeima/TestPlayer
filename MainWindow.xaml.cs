@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -11,13 +15,14 @@ namespace Player
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         MediaPlayer player = new MediaPlayer();
         DispatcherTimer timer = new DispatcherTimer();
         public MainWindow()
         {
             InitializeComponent();
 
-            AudioPlayer.AudioLoad();
+            //AudioPlayer.AudioLoad();
 
             timer.Interval = TimeSpan.FromSeconds(0.1); //установка интервала тикания таймера в 1 секунду
             timer.Tick += timer_tick;
@@ -28,8 +33,6 @@ namespace Player
         {
             timeMaxBlock.Text = player.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
             slider.Maximum = player.NaturalDuration.TimeSpan.TotalSeconds;
-            FileInfo f = new FileInfo(AudioPlayer.filename);
-            titleBlock.Text = f.Name;
         }
 
         private void timer_tick(object sender, EventArgs e)
@@ -52,13 +55,12 @@ namespace Player
 
         private void Next_btn(object sender, RoutedEventArgs e)
         {
-            player.Open(new Uri(AudioPlayer.NextSong(), UriKind.RelativeOrAbsolute));
+            //player.Open(new Uri(AudioPlayer.NextSong(), UriKind.RelativeOrAbsolute));
             player.Play();
         }
 
         private void Start_btn(object sender, RoutedEventArgs e)
         {
-            player.Open(new Uri(AudioPlayer.library[0], UriKind.RelativeOrAbsolute)); //загрузка в "плеер" аудио-файла и ее проигрывание
             player.Play();
             timer.Start();
         }
@@ -68,6 +70,44 @@ namespace Player
             player.Position = TimeSpan.FromSeconds(slider.Value);
         }
 
+        private void Select_folder(object sender, RoutedEventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.ShowNewFolderButton = false;
+            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(fbd.SelectedPath);
 
+                foreach (FileInfo file in dirInfo.GetFiles())
+                {
+                    if (Path.GetExtension(file.FullName) == ".mp3")
+                    {
+                        AudioPlayer.AudioLoad(file.FullName);                        
+                        AudioPlayer.myList.Add(file.Name);
+                    }
+                }
+                playlist.ItemsSource = AudioPlayer.myList;
+            }
+        }
+
+        private void playlist_Selected(object sender, RoutedEventArgs e)
+        {
+            ListBoxItem lbi = e.Source as ListBoxItem;
+
+            if (lbi != null)
+            {
+                foreach (string file in AudioPlayer.library)
+                {
+                    if (file.Contains(playlist.SelectedValue.ToString()))
+                    {
+                        player.Open(new Uri(file, UriKind.RelativeOrAbsolute));
+                        titleBlock.Text = lbi.Content.ToString();
+                    }
+                }
+            }
+            
+        }
+
+        
     }
 }

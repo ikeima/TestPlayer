@@ -5,14 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Player"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="1000">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="230"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
         <TextBlock HorizontalAlignment="Center"  VerticalAlignment="Top"
-                   FontSize="30" Margin="0,100,0,0" x:Name="titleBlock">
+                   FontSize="30" Margin="0,100,0,0" x:Name="titleBlock" Grid.Column="1">
             
         </TextBlock>
         
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                    Height="20" Grid.Column="1">
             <Button Width="70" Height="20" 
                     Click="Pause_btn">
                 Pause
@@ -38,18 +44,35 @@
                 Margin="0,100,0,0" Width="500"
                 Minimum="0"
                 x:Name="slider"
-                ValueChanged="slider_ValueChanged">
+                ValueChanged="slider_ValueChanged" Grid.Column="1">
         </Slider>
 
         <TextBlock x:Name="timeBlock" Text="00:00" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Margin="0,150,490,0">
+                   Margin="0,150,490,0" Grid.Column="1">
             
         </TextBlock>
 
         <TextBlock x:Name="timeMaxBlock" Text="00:00" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Margin="490,150,0,0">
+                   Margin="490,150,0,0" Grid.Column="1">
 
         </TextBlock>
+
+        <StackPanel Grid.Column="0">
+            <ListBox Width="230" Height="400" 
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 x:Name="playlist"
+                 SelectionChanged="">
+               
+            </ListBox>
+
+            <Button Height="20" Width="70" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                Margin="75,20,0,0"
+                Click="Select_folder">
+                Load
+            </Button>
+        </StackPanel>
+        
 
     </Grid>
 </Window>
