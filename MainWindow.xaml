@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:local="clr-namespace:Player"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="1000">
@@ -11,46 +12,59 @@
             <ColumnDefinition Width="230"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
-        <TextBlock HorizontalAlignment="Center"  VerticalAlignment="Top"
-                   FontSize="30" Margin="0,100,0,0" x:Name="titleBlock" Grid.Column="1">
-            
-        </TextBlock>
-        
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
-                    Height="20" Grid.Column="1">
 
-            <Button Width="70" Height="20" Margin="10,0,0,0" 
+        <StackPanel Grid.ColumnSpan="2" Margin="220,0,9.6,0.4">
+            <TextBlock HorizontalAlignment="Center"  VerticalAlignment="Top"
+                   FontSize="25" Margin="0,10,0,10" x:Name="titleBlock">
+
+            </TextBlock>
+
+            <Image Width="170"
+                   Height="170"
+                   gif:ImageBehavior.AnimatedSource="Resources/gif1.gif"
+                   x:Name="image"
+                   Visibility="Hidden">
+
+            </Image>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                    Height="20" Grid.Column="1"
+                    Margin="0,50,0,0">
+
+                <Button Width="70" Height="20" Margin="10,0,0,0" 
                     Click="Pause_resume_btn"
                     x:Name="pauseResumeBtn">
-                Pause
-            </Button>
+                    Pause
+                </Button>
 
-            <Button Width="70" Height="20" Margin="10,0,0,0" 
+                <Button Width="70" Height="20" Margin="10,0,0,0" 
                     Click="Next_btn">
-                Next
-            </Button>
+                    Next
+                </Button>
 
-            <Button Width="70" Height="20" Margin="10,0,0,0" 
+                <Button Width="70" Height="20" Margin="10,0,0,0" 
                     Click="Start_btn">
-                Play
-            </Button>
+                    Play
+                </Button>
+            </StackPanel>
         </StackPanel>
 
+        
+
         <Slider HorizontalAlignment="Center" VerticalAlignment="Center"
-                Margin="0,100,0,0" Width="500"
+                Margin="0,150,0,0" Width="500"
                 Minimum="0"
                 x:Name="slider"
                 ValueChanged="slider_ValueChanged" Grid.Column="1">
         </Slider>
 
         <TextBlock x:Name="timeBlock" Text="00:00" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Margin="0,150,490,0" Grid.Column="1">
+                   Margin="0,200,490,0" Grid.Column="1">
             
         </TextBlock>
 
         <TextBlock x:Name="timeMaxBlock" Text="00:00" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Margin="490,150,0,0" Grid.Column="1">
+                   Margin="490,200,0,0" Grid.Column="1">
 
         </TextBlock>
 

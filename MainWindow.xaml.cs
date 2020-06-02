@@ -62,6 +62,7 @@ namespace Player
                 pauseResumeBtn.Content = "Pause";
                 player.Play();
                 timer.Start();
+                image.Visibility = Visibility.Visible;
                 isResume = true;
             }
         }
@@ -73,6 +74,7 @@ namespace Player
                 pauseResumeBtn.Content = "Resume";
                 player.Pause();
                 timer.Stop();
+                image.Visibility = Visibility.Hidden;
                 isResume = false;
             }
         }
@@ -105,6 +107,7 @@ namespace Player
         {
             player.Play();
             timer.Start();
+            image.Visibility = Visibility.Visible;
         }
 
         private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -142,6 +145,7 @@ namespace Player
                 {
                     player.Open(new Uri(file, UriKind.RelativeOrAbsolute));
                     player.Play();
+                    image.Visibility = Visibility.Visible;
                     timer.Start();
                     break;
                 }

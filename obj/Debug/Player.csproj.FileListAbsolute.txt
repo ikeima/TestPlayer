@@ -28,3 +28,7 @@ C:\Users\Keima\Desktop\Player\obj\Debug\Player.csproj.GenerateResource.cache
 C:\Users\Keima\Desktop\Player\obj\Debug\Player.csproj.CoreCompileInputs.cache
 C:\Users\Keima\Desktop\Player\obj\Debug\Player.exe
 C:\Users\Keima\Desktop\Player\obj\Debug\Player.pdb
+C:\Users\Keima\Desktop\Player\bin\Debug\WpfAnimatedGif.dll
+C:\Users\Keima\Desktop\Player\bin\Debug\WpfAnimatedGif.pdb
+C:\Users\Keima\Desktop\Player\bin\Debug\WpfAnimatedGif.xml
+C:\Users\Keima\Desktop\Player\obj\Debug\Player.csproj.CopyComplete
