@@ -62,7 +62,7 @@
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
                  x:Name="playlist"
-                 SelectionChanged="">
+                 ListBoxItem.Selected="playlist_Selected">
                
             </ListBox>
 

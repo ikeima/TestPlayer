@@ -27,12 +27,17 @@ namespace Player
             timer.Interval = TimeSpan.FromSeconds(0.1); //установка интервала тикания таймера в 1 секунду
             timer.Tick += timer_tick;
             player.MediaOpened += player_MediaOpened;
+            playlist.SelectionChanged += playlist_Selected;
         }
 
         private void player_MediaOpened(object sender, EventArgs e) //событие при загрузке песни
         {
-            timeMaxBlock.Text = player.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
-            slider.Maximum = player.NaturalDuration.TimeSpan.TotalSeconds;
+            if (player.NaturalDuration.HasTimeSpan)
+            {
+                timeMaxBlock.Text = player.NaturalDuration.TimeSpan.ToString(@"mm\:ss");
+                slider.Maximum = player.NaturalDuration.TimeSpan.TotalSeconds;
+            }
+            
         }
 
         private void timer_tick(object sender, EventArgs e)
@@ -59,7 +64,7 @@ namespace Player
             player.Play();
         }
 
-        private void Start_btn(object sender, RoutedEventArgs e)
+        public void Start_btn(object sender, RoutedEventArgs e)
         {
             player.Play();
             timer.Start();
@@ -67,7 +72,9 @@ namespace Player
 
         private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            player.Pause();
             player.Position = TimeSpan.FromSeconds(slider.Value);
+            player.Play();
         }
 
         private void Select_folder(object sender, RoutedEventArgs e)
@@ -92,19 +99,17 @@ namespace Player
 
         private void playlist_Selected(object sender, RoutedEventArgs e)
         {
-            ListBoxItem lbi = e.Source as ListBoxItem;
-
-            if (lbi != null)
+            foreach (string file in AudioPlayer.library)
             {
-                foreach (string file in AudioPlayer.library)
+                if (file.Contains(playlist.SelectedValue.ToString()))
                 {
-                    if (file.Contains(playlist.SelectedValue.ToString()))
-                    {
-                        player.Open(new Uri(file, UriKind.RelativeOrAbsolute));
-                        titleBlock.Text = lbi.Content.ToString();
-                    }
+                    player.Open(new Uri(file, UriKind.RelativeOrAbsolute));
+                    player.Play();
+                    timer.Start();
+                    break;
                 }
             }
+            
             
         }
 

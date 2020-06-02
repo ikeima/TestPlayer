@@ -1,4 +1,4 @@
-﻿        using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,7 +21,12 @@ namespace Player
         {
             for (int i = 0; i < library.Length; i++) //поочередное заполнение массива
             {
-                library[i] = library[i] ?? path;
+                if (library[i] == null)
+                {
+                    library[i] = path;
+                    break;
+                }
+                else continue;
             }
         }
 
