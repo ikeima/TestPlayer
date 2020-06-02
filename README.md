@@ -1,2 +1,2 @@
 # TestPlayer
-This is my first audio player
+This is my first test audio player
