@@ -3,7 +3,9 @@ using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using WpfAnimatedGif;
 
 namespace Player
 {
@@ -12,7 +14,6 @@ namespace Player
     /// </summary>
     public partial class MainWindow : Window
     {
-
         MediaPlayer player = new MediaPlayer();
         DispatcherTimer timer = new DispatcherTimer();
         bool isResume = false;
@@ -99,7 +100,6 @@ namespace Player
                     break;
                 }
             }
-
             player.Play();
         }
 
